@@ -67,9 +67,35 @@ function split_block(block: number[]) {
 
   const half = arr_sum(block) / 2;
 
-  function find_half(block: number[], initial = 0) {}
+  console.log(block);
 
-  for (let i = 0; i < block.length; ++i) {}
+  function find_half(block: number[], initial = 0, index = 0) {
+    if (index >= block.length) {
+      return initial;
+    }
+    let sum = initial + block[index];
+
+    console.log("Checking: ", sum, index);
+
+    if (block.length - 1 > 0) {
+      // Include in sum
+      if (sum < half) {
+        console.log("Checking next", sum, index + 1);
+        sum = find_half(block.slice(1), sum, index + 1);
+      }
+      if (sum > half) {
+        console.log("Too much, skipping", sum);
+        sum = find_half(block.slice(1), initial, index + 1);
+      } else {
+        console.log("Exactly", sum);
+      }
+    }
+
+    return sum;
+  }
+
+  console.log(find_half(block));
 }
 
 const runs = create_block_runs(100, 7, 12);
+split_block(runs);
