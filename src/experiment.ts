@@ -66,36 +66,35 @@ function split_block(block: number[]) {
     throw Error("Block length must be an even number");
 
   const half = arr_sum(block) / 2;
+  const bitmask = Array(block.length).fill(0);
+  
 
   console.log(block);
 
   function find_half(block: number[], initial = 0, index = 0) {
-    if (index >= block.length) {
+    if (index < block.length) {
+      let sum = initial + block[index];
+      bitmask[index] = 1;
+      if (sum < half) {
+        sum = find_half(block, sum, index + 1);
+      }
+      if (sum !== half) {
+        sum = find_half(block, initial, index + 1);
+        bitmask[index] = 0;
+      }
+      if (sum === half) {
+        console.log(index, "Found it!")
+        return sum; 
+      }
+    }
+    else {
       return initial;
     }
-    let sum = initial + block[index];
-
-    console.log("Checking: ", sum, index);
-
-    if (block.length - 1 > 0) {
-      // Include in sum
-      if (sum < half) {
-        console.log("Checking next", sum, index + 1);
-        sum = find_half(block.slice(1), sum, index + 1);
-      }
-      if (sum > half) {
-        console.log("Too much, skipping", sum);
-        sum = find_half(block.slice(1), initial, index + 1);
-      } else {
-        console.log("Exactly", sum);
-      }
-    }
-
-    return sum;
   }
 
   console.log(find_half(block));
+  console.log(bitmask);
 }
 
-const runs = create_block_runs(100, 7, 12);
+const runs = create_block_runs(100, 1, 5);
 split_block(runs);
