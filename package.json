@@ -7,6 +7,7 @@
     "start": "gulp serve"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.181",
     "jspsych": "^7.2.1"
   },
   "devDependencies": {
