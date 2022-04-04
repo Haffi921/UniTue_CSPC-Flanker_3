@@ -1,5 +1,10 @@
 import { shuffle } from "lodash";
 
+export enum RunLength {
+	short = "short",
+	long = "long",
+}
+
 // Hard coded half-blocks, cuz fuck it
 const run_lengths = {
 	short: [
@@ -17,7 +22,7 @@ const run_lengths = {
  * @param run_length Length of chunks to select from
  * @returns A full block sequence of run lengths
  */
-function weave_block(run_length: "short" | "long"): number[] {
+function weave_block(run_length: RunLength): number[] {
 	/**
 	 * Generic function to select random element from an array
 	 * @param arr Array to select out of
@@ -88,6 +93,6 @@ function fill_block(run_length_block: number[]): number[] {
  * @param run_length Length of chunks to select from
  * @returns Fully fleshed out block sequence of conditions
  */
-export function create_block(run_length: "short" | "long") {
+export function create_block(run_length: RunLength) {
 	return fill_block(weave_block(run_length))
 }
