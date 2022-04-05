@@ -1,21 +1,18 @@
 import { shuffle } from "lodash";
 
 export enum RunLength {
-	short = "short",
-	long = "long",
+  short = "short",
+  long = "long",
 }
 
 // Hard coded half-blocks, cuz fuck it
 const run_lengths = {
-	short: [
-		[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 4],
-		[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 2, 3],
-		[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 5],
-	],
-	long: [
-		[8, 9, 10, 11, 12],
-	]
-}
+  short: [
+    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+    1, 2, 3, 4, 5, 1, 2, 3, 4,
+  ],
+  long: [8, 9, 10, 11, 12, 8, 9, 10, 11, 12],
+};
 
 /**
  * Weaves together two randomly selected half-blocks of specified run length
@@ -23,50 +20,23 @@ const run_lengths = {
  * @returns A full block sequence of run lengths
  */
 function weave_block(run_length: RunLength): number[] {
-	/**
-	 * Generic function to select random element from an array
-	 * @param arr Array to select out of
-	 * @returns Random element from `arr`
-	 */
-	function get_random_arr_val(arr: any[]): any {
-		const index = Math.floor(Math.random() * arr.length);
-		return arr[index];
-	}
+  const condition: number[][] = [
+    shuffle(run_lengths[run_length]),
+    shuffle(run_lengths[run_length]),
+  ];
 
-	/**
-	 * Selects the longer array of two, randomly selecting one if they equal in length
-	 * @param arr_A First array
-	 * @param arr_B Second array
-	 * @returns Index of selected array
-	 */
-	function get_start_index(arr_A: any[], arr_B: any[]): number {
-		if (arr_A.length === arr_B.length)
-			return Math.round(Math.random());
+  const sequence = []; // Return sequence
 
-		if (arr_A.length > arr_B.length)
-			return 0;
-		
-		if (arr_A.length < arr_B.length)
-			return 1;
-	}
+  let index = Math.round(Math.random());
 
-	const condition: { [key: string]: number[] } = {
-		A: shuffle(get_random_arr_val(run_lengths[run_length])),
-		B: shuffle(get_random_arr_val(run_lengths[run_length])),
-	};
+  while (condition[0].length !== 0 || condition[1].length !== 0) {
+    // Pop one to sequence
+    sequence.push(condition[index].pop());
+    // Continue
+    index = index === 0 ? 1 : 0;
+  }
 
-	const sequence = []; // Return sequence
-	
-	let index = get_start_index(condition.A, condition.B) === 0 ? "A" : "B";
-	
-	while (condition.A.length !== 0 || condition.B.length !== 0) {
-		// Pop one to sequence
-		sequence.push(condition[index].pop());
-		// Continue
-		index = index === "A" ? "B" : "A";
-	}
-
-	return sequence;
+  return sequence;
 }
 
 /**
@@ -75,17 +45,17 @@ function weave_block(run_length: RunLength): number[] {
  * @returns Fully fleshed out block sequence of conditions
  */
 function fill_block(run_length_block: number[]): number[] {
-	const sequence: number[] = [];
-	
-	let fill_value = Math.round(Math.random());
+  const sequence: number[] = [];
 
-	for (const run_length of run_length_block) {
-		for (let i = 0; i < run_length; ++i) sequence.push(fill_value);
+  let fill_value = Math.round(Math.random());
 
-		fill_value = fill_value === 0 ? 1 : 0;
-	}
+  for (const run_length of run_length_block) {
+    for (let i = 0; i < run_length; ++i) sequence.push(fill_value);
 
-	return sequence;
+    fill_value = fill_value === 0 ? 1 : 0;
+  }
+
+  return sequence;
 }
 
 /**
@@ -93,6 +63,6 @@ function fill_block(run_length_block: number[]): number[] {
  * @param run_length Length of chunks to select from
  * @returns Fully fleshed out block sequence of conditions
  */
-export function create_block(run_length: RunLength) {
-	return fill_block(weave_block(run_length))
+export function create_context_switcher(run_length: RunLength) {
+  return fill_block(weave_block(run_length));
 }

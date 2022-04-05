@@ -1,9 +1,9 @@
 import { clone } from "lodash";
-import { Group } from "./groups";
+import { Position } from "./groups";
 
-import { create_block, RunLength } from "./run_lengths";
+import { RunLength } from "./run_lengths";
 
-enum ProportionCongruency {
+export enum ProportionCongruency {
   mostly_congruent = "mostly_congruent",
   mostly_incongruent = "mostly_incongruent",
 }
@@ -30,9 +30,22 @@ export interface TrialData {
   congruency: Congruency;
   correct_key: ResponseKey;
 
-  position?: string;
+  position?: Position;
   proportion_congruency?: ProportionCongruency;
   run_length_type?: RunLength;
+}
+
+export function complete_trial_data(
+  trial_data: TrialData,
+  position: Position,
+  pc: ProportionCongruency,
+  run_length: RunLength
+): TrialData {
+  trial_data.position = position;
+  trial_data.proportion_congruency = pc;
+  trial_data.run_length_type = run_length;
+
+  return trial_data;
 }
 
 const trial_groups: TrialData[] = [
@@ -99,7 +112,9 @@ const PC_groups = {
   mostly_incongruent: [8, 32, 8, 32, 5, 5, 5, 5],
 };
 
-function create_context_block(pc_group: ProportionCongruency): TrialData[] {
+export function create_context_block(
+  pc_group: ProportionCongruency
+): TrialData[] {
   function get_available_indexes(arr: number[]) {
     return arr.reduce((a, v, i) => {
       if (v > 0) a.push(i);
@@ -120,46 +135,6 @@ function create_context_block(pc_group: ProportionCongruency): TrialData[] {
     sequence.push(clone(trial_groups[index]));
     --trial_counter[index];
     indexes = get_available_indexes(trial_counter);
-  }
-
-  return sequence;
-}
-
-export function create_trial_block(
-  group: Group,
-  half: number = 0
-): TrialData[] {
-  const mostly_congruent = create_context_block(
-    ProportionCongruency.mostly_congruent
-  );
-  const mostly_incongruent = create_context_block(
-    ProportionCongruency.mostly_incongruent
-  );
-  const context_switcher = create_block(group.run_length_order[half]);
-
-  const sequence: TrialData[] = [];
-
-  for (const trial of mostly_congruent) {
-    trial.position = group.mostly_congruent;
-    trial.proportion_congruency = ProportionCongruency.mostly_congruent;
-    trial.run_length_type = group.run_length_order[half];
-  }
-
-  for (const trial of mostly_incongruent) {
-    trial.position = group.mostly_incongruent;
-    trial.proportion_congruency = ProportionCongruency.mostly_incongruent;
-    trial.run_length_type = group.run_length_order[half];
-  }
-
-  for (const context of context_switcher) {
-    switch (context) {
-      case 0:
-        sequence.push(mostly_congruent.pop());
-        break;
-      case 1:
-        sequence.push(mostly_incongruent.pop());
-        break;
-    }
   }
 
   return sequence;
