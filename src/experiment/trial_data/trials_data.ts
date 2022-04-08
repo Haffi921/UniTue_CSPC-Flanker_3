@@ -32,6 +32,8 @@ export interface TrialData {
 
   position?: Position;
   proportion_congruency?: ProportionCongruency;
+  run_length?: number;
+  run_length_current?: number;
   run_length_type?: RunLength;
 }
 

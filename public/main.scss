@@ -1,9 +1,18 @@
 @import "~jspsych/css/jspsych.css";
 
+$font-family: 'Courier New', Courier, monospace;
 $font-size: 18pt;
+
+div {
+  box-sizing: inherit;
+  width: inherit;
+  min-width: inherit;
+  max-width: inherit;
+}
 
 p {
   color: white;
+  font-family: $font-family;
   font-size: $font-size;
 
   .gray {
@@ -16,60 +25,45 @@ p {
   color: white;
 }
 
-.jspsych-image-slider-response-container {
-  width: 65vw;
-}
-
-.fixation_cross {
-  font-size: 46px;
-}
-
-.trial_container {
+.display {
   position: absolute;
-  height: 472px;
-  width: 384px;
-  top: calc(50% - 236px);
-  left: calc(50% - 192px);
+  margin: 15vh 10vw;
+  height: 70vh;
+  width: 1200px;
+  max-width: 80vw;
+  top: 0;
+  left: calc(50% - min(600px, 40vw) - 10vw);
   box-sizing: border-box;
-
-  .distractor_container {
+  
+  .upper, .lower {
     position: absolute;
-    height: 80%;
-    width: 100%;
-
+    border: 3px white solid;
+    height: 280px;
+    max-height: 30vh;
+    width: 500px;
+    left: calc(50% - min(250px, 40vw));
+  
     display: flex;
     flex-direction: column;
     justify-content: center;
     white-space: pre;
-
-    .distractor {
-      color: red;
-      font-size: 74px;
-      font-weight: bolder;
-    }
   }
-
+  
   .upper {
     top: 0;
   }
-
+  
   .lower {
     bottom: 0;
   }
-}
-
-.feedback_container {
-  font-size: 56px;
-  color: red;
-}
-
-.instruction_container {
-  width: 90vw;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  
+  .center-text {
+    position: absolute;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   .hint {
     p {
@@ -77,6 +71,20 @@ p {
       line-height: 1;
     }
     position: absolute;
-    bottom: calc(max(15vh, 120px));
+    bottom: calc(max(-15vh, -120px));
+  }
+
+  .error {
+    p {
+      color: red;
+    }
+    border-color: red;
+  }
+
+  .green {
+    p {
+      color: green;
+    }
+    border-color: green;
   }
 }

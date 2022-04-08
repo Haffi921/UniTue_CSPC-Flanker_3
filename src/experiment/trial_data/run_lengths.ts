@@ -5,6 +5,12 @@ export enum RunLength {
   long = "long",
 }
 
+export interface RunLengthData {
+  context: number;
+  run_length: number;
+  run_length_current: number;
+}
+
 // Hard coded half-blocks, cuz fuck it
 const run_lengths = {
   short: [
@@ -44,15 +50,20 @@ function weave_block(run_length: RunLength): number[] {
  * @param run_length_block Full block sequence of run lengths
  * @returns Fully fleshed out block sequence of conditions
  */
-function fill_block(run_length_block: number[]): number[] {
-  const sequence: number[] = [];
+function fill_block(run_length_block: number[]): RunLengthData[] {
+  const sequence: RunLengthData[] = [];
 
-  let fill_value = Math.round(Math.random());
+  let context = Math.round(Math.random());
 
   for (const run_length of run_length_block) {
-    for (let i = 0; i < run_length; ++i) sequence.push(fill_value);
+    for (let i = 0; i < run_length; ++i)
+      sequence.push({
+        context: context,
+        run_length: run_length,
+        run_length_current: i + 1,
+      });
 
-    fill_value = fill_value === 0 ? 1 : 0;
+    context = context === 0 ? 1 : 0;
   }
 
   return sequence;
@@ -63,6 +74,8 @@ function fill_block(run_length_block: number[]): number[] {
  * @param run_length Length of chunks to select from
  * @returns Fully fleshed out block sequence of conditions
  */
-export function create_context_switcher(run_length: RunLength) {
+export function create_context_switcher(
+  run_length: RunLength
+): RunLengthData[] {
   return fill_block(weave_block(run_length));
 }

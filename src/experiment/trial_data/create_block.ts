@@ -36,8 +36,12 @@ export function create_trial_block(
 
   const sequence: TrialData[] = [];
 
-  for (const context of context_switcher)
-    sequence.push(context_sequences[context].pop());
+  for (const { context, run_length, run_length_current } of context_switcher)
+    sequence.push({
+      ...context_sequences[context].pop(),
+      run_length: run_length,
+      run_length_current: run_length_current,
+    });
 
   return sequence;
 }
