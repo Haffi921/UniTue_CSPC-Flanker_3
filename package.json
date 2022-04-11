@@ -7,6 +7,8 @@
     "start": "gulp serve"
   },
   "dependencies": {
+    "@jspsych/plugin-browser-check": "^1.0.0",
+    "@jspsych/plugin-fullscreen": "^1.1.0",
     "@jspsych/plugin-html-keyboard-response": "^1.1.0",
     "@jspsych/plugin-instructions": "^1.1.0",
     "@types/lodash": "^4.14.181",
