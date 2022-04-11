@@ -1,5 +1,5 @@
 {
-  "title": "CTFW Stroop Task",
+  "title": "CSPC Flanker Task 3",
   "components": {
     "batch_init": "src/batch_init.ts",
     "informedConsent": "src/informedConsent",

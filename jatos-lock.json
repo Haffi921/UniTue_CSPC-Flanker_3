@@ -1,15 +1,20 @@
 {
-    "uuid": "5a181ee6-1cf4-4afe-8746-5e1249f3ab5f",
-    "title": "CTFW Stroop Task",
-    "dirName": "ctfw_stroop_task",
+    "uuid": "6a44b9d1-315e-471c-85ea-7a7bf562d7fc",
+    "title": "CSPC Flanker Task 3",
+    "dirName": "cspc_flanker_task_3",
     "componentList": [
         {
-            "uuid": "fb999189-23d8-4eec-a20a-978627def537",
+            "uuid": "ac576840-2ee8-4ae1-a94e-d24c56b06057",
+            "title": "batch_init",
+            "htmlFilePath": "batch_init/index.html"
+        },
+        {
+            "uuid": "9a4c8dd7-3b84-4f88-a5f1-679d206de13b",
             "title": "informedConsent",
             "htmlFilePath": "informedConsent/index.html"
         },
         {
-            "uuid": "9d19784c-ab4a-4cc3-be0d-7eac5dd790d9",
+            "uuid": "630afd00-9d2e-479d-b4b9-460c97de6cd5",
             "title": "experiment",
             "htmlFilePath": "experiment/index.html"
         }

@@ -1,4 +1,4 @@
-import { groups } from "./trial_data/groups";
+import { groups } from "./experiment/trial_data/groups";
 
 function CopyJsonInputToBatch() {
   let error_counter = 0;
