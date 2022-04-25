@@ -1,7 +1,8 @@
 {
   "title": "CSPC Flanker Task 3",
   "components": {
-    "batch_init": "src/batch_init.ts",
+    "batch_init": "src/batch_init",
+    "group_select": "src/group_select",
     "informedConsent": "src/informedConsent",
     "experiment": "src/experiment"
   }

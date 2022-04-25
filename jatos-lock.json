@@ -9,6 +9,11 @@
             "htmlFilePath": "batch_init/index.html"
         },
         {
+            "uuid": "3c4b693e-7b71-4e19-9829-3c2f9c5590ed",
+            "title": "group_select",
+            "htmlFilePath": "group_select/index.html"
+        },
+        {
             "uuid": "9a4c8dd7-3b84-4f88-a5f1-679d206de13b",
             "title": "informedConsent",
             "htmlFilePath": "informedConsent/index.html"

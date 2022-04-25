@@ -16,7 +16,7 @@ function record_group(group: number) {
 }
 
 async function run() {
-  const group_nr = Math.floor(Math.random() * groups.length);
+  const group_nr = jatos.studySessionData.group;
 
   const jsPsych = initJsPsych({
     on_finish() {
