@@ -27,18 +27,21 @@ async function run() {
     },
   });
 
+  const number_of_blocks = 4;
+  const group = groups[group_nr];
+
+  const timeline = [];
+
   jsPsych.data.addProperties({
     subject: jatos.studyResultId,
     workerID: jatos.workerId,
     prolificPID: jatos.urlQueryParameters.PROLIFIC_PID,
     prolificSID: jatos.urlQueryParameters.STUDY_ID,
     prolificSEID: jatos.urlQueryParameters.SESSION_ID,
+
+    mostly_congruent_position: group.mostly_congruent_pos,
+    mostly_incongruent_position: group.mostly_incongruent_pos,
   });
-
-  const number_of_blocks = 4;
-  const group = groups[group_nr];
-
-  const timeline = [];
 
   // Switch to fullscreen
   timeline.push({
