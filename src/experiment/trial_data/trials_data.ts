@@ -35,6 +35,10 @@ export interface TrialData {
   run_length?: number;
   run_length_current?: number;
   run_length_type?: RunLength;
+
+  block_type?: string;
+  block_nr?: number;
+  trial_nr?: number;
 }
 
 export function complete_trial_data(
@@ -124,8 +128,8 @@ export function create_context_block(
     }, []);
   }
 
-  function random_index(arr: any[]) {
-    return Math.floor(Math.random() * arr.length);
+  function random_item(arr: any[]) {
+    return arr[Math.floor(Math.random() * arr.length)];
   }
 
   const trial_counter = clone(PC_groups[pc_group]);
@@ -133,7 +137,7 @@ export function create_context_block(
   const sequence = [];
 
   while (indexes.length > 0) {
-    const index = random_index(trial_counter);
+    const index = random_item(indexes);
     sequence.push(clone(trial_groups[index]));
     --trial_counter[index];
     indexes = get_available_indexes(trial_counter);

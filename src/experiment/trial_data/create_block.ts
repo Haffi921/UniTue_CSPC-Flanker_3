@@ -9,7 +9,9 @@ import {
 
 export function create_trial_block(
   group: Group,
-  half: number = 0
+  half: number = 0,
+  block_nr: number,
+  block_type: string = "trial"
 ): TrialData[] {
   const context_sequences = [
     create_context_block(ProportionCongruency.mostly_congruent).map((trial) =>
@@ -41,7 +43,12 @@ export function create_trial_block(
       ...context_sequences[context].pop(),
       run_length: run_length,
       run_length_current: run_length_current,
+      block_nr: block_nr,
+      block_type: block_type,
     });
 
-  return sequence;
+  return sequence.map((trial, index) => {
+    trial.trial_nr = index;
+    return trial;
+  });
 }

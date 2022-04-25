@@ -60,13 +60,19 @@ async function run() {
         timeline: trial(jsPsych),
         timeline_variables: create_trial_block(
           group,
-          block < number_of_blocks / 2 ? 0 : 1
+          block < number_of_blocks / 2 ? 0 : 1,
+          block
         ),
       });
     } else {
       timeline.push({
         timeline: trial(jsPsych),
-        timeline_variables: create_trial_block(group, 0).slice(0, 20),
+        timeline_variables: create_trial_block(
+          group,
+          0,
+          block,
+          "practice"
+        ).slice(0, 20),
       });
     }
     timeline.push(between_trials(jsPsych));
