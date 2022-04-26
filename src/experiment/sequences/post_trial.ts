@@ -135,7 +135,7 @@ export function post_trial(jsPsych: JsPsych) {
     data: () => ({
       target: jsPsych.timelineVariable("target"),
       position: jsPsych.timelineVariable("context"),
-      trial: "post_trial",
+      block_type: "post_trial",
     }),
     choices: () => jsPsych.timelineVariable("keys"),
   };
